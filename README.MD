@@ -3,5 +3,5 @@ Esse codigo e uma ferramenta para leitura e parsing de Logs gerado pelo XLD para
 
 # A Fazer:
 
-[ ] - Criar o leitor de arquivos para abrir 
-[ ] - Implementar o gerador de arquivo YAML
+- [ ] - Criar o leitor de arquivos para abrir 
+- [ ] - Implementar o gerador de arquivo YAML
