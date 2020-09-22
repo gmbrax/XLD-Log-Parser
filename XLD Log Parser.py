@@ -1,5 +1,6 @@
 from termcolor import colored  # Permite Texto colorido
 import os
+import time
 import glob
 
 class TagedTextOutput:
@@ -13,13 +14,19 @@ class TagedTextOutput:
         return "[  " + colored(self.text, self.color) + "  ] " + message
 
 
-class CD_rippaddo:
+class CDrippaddo:
     def __init__(self, ID, Artista, Nome, status, LOG):
         self.ID = ID
         self.Artista = Artista
         self.Nome = Nome
         self.status = status
         self.LOG = LOG
+
+
+class Tracksdocd:
+    def __init__(self):
+        self.tracknumber
+        self.trackstatus
 
 
 TagAviso = TagedTextOutput('yellow', 'Aviso')
@@ -53,9 +60,20 @@ def LogCrawler():
         print(TagErro.PrintTaggedMsg("Nenhum Log Encontrado"))
         print(TagErro.PrintTaggedMsg("Saindo"))
     for i, item in enumerate(log_list):
-        print(TagNormal.PrintTaggedMsg("(" + str(i)+"/" + str(len(log_list)-1) + ") " +item))
+        print(TagNormal.PrintTaggedMsg("(" + str(i) + "/" + str(len(log_list) - 1) + ") " + item))
+        # time.sleep(0.1)
 
-    return
+    return log_list
+
+
+def logsparser(logs):
+    for i, item in enumerate(logs):
+        print(TagNormal.PrintTaggedMsg("ABRINDO:(" + str(i) + "/" + str(len(logs) - 1) + ") " + item))
+        with open(logs[i], 'r') as f:
+            f_conteudo = f.readlines()
+            print(len(f_conteudo))
+
 
 intro()
-LogCrawler()
+crawler_results = LogCrawler()
+logsparser(crawler_results)
