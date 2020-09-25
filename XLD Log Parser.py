@@ -1,7 +1,7 @@
-from termcolor import colored  # Permite Texto colorido
-import os
-import time
 import glob
+
+from termcolor import colored  # Permite Texto colorido
+
 
 class TagedTextOutput:
     def __init__(self, color, text):
@@ -15,18 +15,18 @@ class TagedTextOutput:
 
 
 class CDrippaddo:
-    def __init__(self, ID, Artista, Nome, status, LOG):
-        self.ID = ID
-        self.Artista = Artista
-        self.Nome = Nome
+    def __init__(self, id, artista, nome, status, log):
+        self.id = id
+        self.artista = artista
+        self.Nome = nome
         self.status = status
-        self.LOG = LOG
+        self.LOG = log
 
 
 class Tracksdocd:
     def __init__(self):
-        self.tracknumber
-        self.trackstatus
+        self.tracknumber = ""
+        self.trackstatus = ""
 
 
 TagAviso = TagedTextOutput('yellow', 'Aviso')
@@ -49,7 +49,8 @@ def intro():
     print(TagMensagem.PrintTaggedMsg("Iniciando Aplicação..."))
     print(TagMensagem.PrintTaggedMsg("Vai Começar a putaria...."))
 
-def LogCrawler():
+
+def logcrawler():
     log_list = []
     for file in glob.glob("**/*.log", recursive=True):
         log_list.append(file)
@@ -61,7 +62,6 @@ def LogCrawler():
         print(TagErro.PrintTaggedMsg("Saindo"))
     for i, item in enumerate(log_list):
         print(TagNormal.PrintTaggedMsg("(" + str(i) + "/" + str(len(log_list) - 1) + ") " + item))
-        # time.sleep(0.1)
 
     return log_list
 
@@ -71,9 +71,11 @@ def logsparser(logs):
         print(TagNormal.PrintTaggedMsg("ABRINDO:(" + str(i) + "/" + str(len(logs) - 1) + ") " + item))
         with open(logs[i], 'r') as f:
             f_conteudo = f.readlines()
-            print(len(f_conteudo))
+            if any("Disc not found in AccurateRip DB." in word for word in f_conteudo):
+                print(TagAviso.PrintTaggedMsg("CD Não usou AccurateRip"))
+        print(f_conteudo[4])
 
 
 intro()
-crawler_results = LogCrawler()
+crawler_results = logcrawler()
 logsparser(crawler_results)
